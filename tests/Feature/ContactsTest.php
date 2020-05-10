@@ -16,7 +16,7 @@ class ContactsTest extends TestCase
     {
         $data = $this->data();
 
-        $this->post(route('api.contacts.add'), $data);
+        $this->post(route('api.contacts.store'), $data);
 
         $contact = Contact::first();
 
@@ -26,12 +26,10 @@ class ContactsTest extends TestCase
     }
 
 
-    /** @test  */
+    /** @test */
     public function test_first_name_is_required()
     {
-
-
-        $response = $this->post(route('api.contacts.add'), array_merge($this->data(), ['first_name' => '']));
+        $response = $this->post(route('api.contacts.store'), array_merge($this->data(), ['first_name' => '']));
 
         $response->assertSessionHasErrors('first_name');
 
@@ -39,20 +37,20 @@ class ContactsTest extends TestCase
     }
 
 
-    /** @test  */
+    /** @test */
     public function test_last_name_is_required()
     {
-        $response = $this->post(route('api.contacts.add'), array_merge($this->data(), ['last_name' => '']));
+        $response = $this->post(route('api.contacts.store'), array_merge($this->data(), ['last_name' => '']));
 
         $response->assertSessionHasErrors('last_name');
 
         $this->assertDatabaseCount('contacts', 0);
     }
 
-    /** @test  */
+    /** @test */
     public function test_email_is_required()
     {
-        $response = $this->post(route('api.contacts.add'), array_merge($this->data(), ['email' => '']));
+        $response = $this->post(route('api.contacts.store'), array_merge($this->data(), ['email' => '']));
 
         $response->assertSessionHasErrors('email');
 
@@ -60,10 +58,10 @@ class ContactsTest extends TestCase
     }
 
 
-    /** @test  */
+    /** @test */
     public function test_birth_date_is_required()
     {
-        $response = $this->post(route('api.contacts.add'), array_merge($this->data(), ['birth_date' => '']));
+        $response = $this->post(route('api.contacts.store'), array_merge($this->data(), ['birth_date' => '']));
 
         $response->assertSessionHasErrors('birth_date');
 
@@ -75,7 +73,7 @@ class ContactsTest extends TestCase
     {
         $data = $this->data();
 
-        $this->post(route('api.contacts.add'), $data);
+        $this->post(route('api.contacts.store'), $data);
 
         $contact = Contact::first();
 
@@ -87,6 +85,56 @@ class ContactsTest extends TestCase
 
         $this->assertInstanceOf(Carbon::class, $contact->birth_date);
     }
+
+
+    /** @test */
+    public function can_get_a_contact()
+    {
+        $contact = factory(Contact::class)->create();
+
+        $response = $this->get(route('api.contact.show', $contact->id));
+
+        $response->assertJson(
+            [
+                "first_name" => $contact->first_name,
+                "last_name" => $contact->last_name,
+                "other_names" => $contact->other_names,
+                "email" => $contact->email,
+                "phone_number" => $contact->phone_number,
+                "company" => $contact->company,
+            ]
+        );
+    }
+
+
+    /** @test */
+    public function can_update_a_contact()
+    {
+        $contact = factory(Contact::class)->create();
+
+        $data = $this->data();
+
+        $this->patch(route('api.contact.update', $contact->id), $data);
+
+        $contact = $contact->fresh();
+
+        $this->assertEquals($data['first_name'], $contact->first_name);
+        $this->assertEquals($data['phone_number'], $contact->phone_number);
+        $this->assertEquals($data['email'], $contact->email);
+    }
+
+
+    /** @test */
+    public function can_delete_a_contact()
+    {
+        $contact = factory(Contact::class)->create();
+
+        $this->delete(route('api.contact.destroy', $contact->id));
+
+        $this->assertDatabaseCount('contacts', 0);
+    }
+
+
 
     /**
      * @return array

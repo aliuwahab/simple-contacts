@@ -17,4 +17,15 @@ class Contact extends Model
         $this->attributes['birth_date'] = Carbon::parse($value);
     }
 
+    /**
+     * Get the user's birth date.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getBirthDateAttribute($value)
+    {
+        return  Carbon::parse($value);
+    }
+
 }
