@@ -22,6 +22,7 @@ class CreateContactsTable extends Migration
             $table->string('company')->nullable();
             $table->string('email');
             $table->string('phone_number')->nullable();
+            $table->foreignId('user_id');
             $table->timestamps();
         });
     }

@@ -14,13 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/contacts', 'ContactController@store')->name('api.contacts.store');
-Route::get('/contacts/{contact}', 'ContactController@show')->name('api.contact.show');
-Route::patch('/contacts/{contact}', 'ContactController@update')->name('api.contact.update');
-Route::delete('/contacts/{contact}', 'ContactController@destroy')->name('api.contact.destroy');
 
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:api')->group( function (){
+    Route::get('/contacts', 'ContactController@index')->name('api.contacts');
+    Route::post('/contacts', 'ContactController@store')->name('api.contacts.store');
+    Route::get('/contacts/{contact}', 'ContactController@show')->name('api.contact.show');
+    Route::patch('/contacts/{contact}', 'ContactController@update')->name('api.contact.update');
+    Route::delete('/contacts/{contact}', 'ContactController@destroy')->name('api.contact.destroy');
 });
 

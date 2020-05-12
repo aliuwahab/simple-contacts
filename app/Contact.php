@@ -28,4 +28,10 @@ class Contact extends Model
         return  Carbon::parse($value);
     }
 
+
+    public function user ()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }
