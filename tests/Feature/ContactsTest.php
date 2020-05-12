@@ -35,8 +35,6 @@ class ContactsTest extends TestCase
     /** @test */
     public function an_authenticated_user_can_add_a_contact()
     {
-
-
         $data = $this->data();
 
         $this->post(route('api.contacts.store'), $data);
@@ -116,21 +114,20 @@ class ContactsTest extends TestCase
         $contact = factory(Contact::class)->create(['user_id' => $this->user->id]);
 
 //        $response = $this->get(route('api.contact.show', $contact->id, ['api_token' => $this->user->api_token])); TODO:: Figure out how to use route name for get with query strings
-        $response = $this->get('/api/contacts/'.$contact->id. '?api_token='.$this->user->api_token);
+        $response = $this->get('/api/contacts/' . $contact->id . '?api_token=' . $this->user->api_token);
 
         $response->assertJson(
             [
-                "first_name" => $contact->first_name,
-                "last_name" => $contact->last_name,
-                "other_names" => $contact->other_names,
-                "email" => $contact->email,
-                "phone_number" => $contact->phone_number,
-                "company" => $contact->company,
+                'data' => [
+                    'contact_id' => $contact->id,
+                    'full_name' => $contact->first_name . ' ' . $contact->other_names . ' ' . $contact->last_name,
+                    "email" => $contact->email,
+                    "phone_number" => $contact->phone_number,
+                    "company" => $contact->company,
+                ]
             ]
         );
     }
-
-
 
 
     /** @test */
@@ -141,7 +138,7 @@ class ContactsTest extends TestCase
         $anotherUser = factory(User::class)->create();
 
 //        $response = $this->get(route('api.contact.show', $contact->id, ['api_token' => $this->user->api_token])); TODO:: Figure out how to use route name for get with query strings
-        $response = $this->get('/api/contacts/'.$contact->id. '?api_token='.$anotherUser->api_token);
+        $response = $this->get('/api/contacts/' . $contact->id . '?api_token=' . $anotherUser->api_token);
 
         $response->assertStatus(403);
     }
@@ -172,10 +169,12 @@ class ContactsTest extends TestCase
 
         $data = $this->data();
 
-        $response = $this->patch(route('api.contact.update', $contact->id), array_merge($data, ['api_token' => $anotherUser->api_token]));
+        $response = $this->patch(
+            route('api.contact.update', $contact->id),
+            array_merge($data, ['api_token' => $anotherUser->api_token])
+        );
 
         $response->assertStatus(403);
-
     }
 
     /** @test */
@@ -210,9 +209,13 @@ class ContactsTest extends TestCase
         factory(Contact::class)->create(['user_id' => $secondUser->id]);
 
         //$response = $this->get(route('api.contacts', $contact->id, ['api_token' => $this->user->api_token])); TODO:: Figure out how to use route name for get with query strings
-        $response = $this->get('/api/contacts/?api_token='.$firstUser->api_token);
+        $response = $this->get('/api/contacts/?api_token=' . $firstUser->api_token);
 
-        $response->assertJsonCount(1)->assertJson([['id' => $firstUserContact->id]]);
+        $response->assertJsonCount(1)->assertJson(
+            [
+                'data' => [['contact_id' => $firstUserContact->id]]
+            ]
+        );
     }
 
 
