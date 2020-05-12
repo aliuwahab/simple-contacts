@@ -6,6 +6,7 @@ use App\Contact;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class ContactsTest extends TestCase
@@ -37,13 +38,21 @@ class ContactsTest extends TestCase
     {
         $data = $this->data();
 
-        $this->post(route('api.contacts.store'), $data);
+        $response = $this->post(route('api.contacts.store'), $data);
 
         $contact = Contact::first();
 
         $this->assertEquals($data['first_name'], $contact->first_name);
         $this->assertEquals($data['phone_number'], $contact->phone_number);
         $this->assertEquals($data['email'], $contact->email);
+
+        $response->assertStatus(Response::HTTP_CREATED);
+        $response->assertJson(
+            [
+                'data' => ['contact_id' => $contact->id],
+                'links' => ['self' => $contact->path()]
+            ]
+        );
     }
 
 
@@ -150,13 +159,21 @@ class ContactsTest extends TestCase
 
         $data = $this->data();
 
-        $this->patch(route('api.contact.update', $contact->id), $data);
+        $response = $this->patch(route('api.contact.update', $contact->id), $data);
 
         $contact = $contact->fresh();
 
         $this->assertEquals($data['first_name'], $contact->first_name);
         $this->assertEquals($data['phone_number'], $contact->phone_number);
         $this->assertEquals($data['email'], $contact->email);
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJson(
+            [
+                'data' => ['contact_id' => $contact->id],
+                'links' => ['self' => $contact->path()]
+            ]
+        );
     }
 
 
@@ -182,9 +199,11 @@ class ContactsTest extends TestCase
     {
         $contact = factory(Contact::class)->create(['user_id' => $this->user->id]);
 
-        $this->delete(route('api.contact.destroy', $contact->id), ['api_token' => $this->user->api_token]);
+        $response = $this->delete(route('api.contact.destroy', $contact->id), ['api_token' => $this->user->api_token]);
 
         $this->assertDatabaseCount('contacts', 0);
+
+        $response->assertStatus(Response::HTTP_NO_CONTENT);
     }
 
     /** @test */
@@ -200,7 +219,7 @@ class ContactsTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_can_get_their_contacts()
+    public function an_authenticated_user_can_get_their_the_list_of_their_contacts()
     {
         $firstUser = factory(User::class)->create();
         $secondUser = factory(User::class)->create();
@@ -213,7 +232,12 @@ class ContactsTest extends TestCase
 
         $response->assertJsonCount(1)->assertJson(
             [
-                'data' => [['contact_id' => $firstUserContact->id]]
+                'data' => [
+                    [
+                        'data' => ['contact_id' => $firstUserContact->id]
+
+                    ]
+                ]
             ]
         );
     }

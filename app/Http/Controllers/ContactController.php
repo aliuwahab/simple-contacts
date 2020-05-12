@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contact;
 use App\Http\Resources\ContactResource;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ContactController extends Controller
 {
@@ -19,7 +20,9 @@ class ContactController extends Controller
     {
         $this->authorize('viewAny', Contact::class);
 
-        request()->user()->contacts()->create($this->getValidate());
+        $contact = request()->user()->contacts()->create($this->getValidate());
+
+        return (new ContactResource($contact))->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
     public function show(Contact $contact)
@@ -34,6 +37,8 @@ class ContactController extends Controller
         $this->authorize('view', $contact);
 
         $contact->update($this->getValidate());
+
+        return (new ContactResource($contact))->response()->setStatusCode(Response::HTTP_OK);
     }
 
 
@@ -42,6 +47,8 @@ class ContactController extends Controller
         $this->authorize('delete', $contact);
 
         $contact->delete();
+
+        return \response([], Response::HTTP_NO_CONTENT);
     }
 
     /**
