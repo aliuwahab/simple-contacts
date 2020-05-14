@@ -16,8 +16,7 @@
                 @csrf
 
                 <div class="relative">
-                    <label for="email"
-                           class="uppercase text-blue-500 text-xs font-bold absolute pl-3 pt-2">E-mail</label>
+                    <label for="email" class="uppercase text-blue-500 text-xs font-bold absolute pl-3 pt-2">E-mail</label>
 
                     <input id="email" type="email"
                            class="pt-8 w-full rounded p-3 bg-blue-800 text-gray-100 outline-none focus:bg-blue-700"

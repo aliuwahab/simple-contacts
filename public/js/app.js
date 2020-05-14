@@ -1955,17 +1955,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/bootstrap/dist/js/bootstrap.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/bootstrap/dist/js/bootstrap.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/gbeilaaliuwahab/Code/contacts/node_modules/bootstrap/dist/js/bootstrap.js'");
-
-/***/ }),
-
 /***/ "./node_modules/jquery/dist/jquery.js":
 /*!********************************************!*\
   !*** ./node_modules/jquery/dist/jquery.js ***!
@@ -48286,9 +48275,7 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
 try {
   window.Popper = __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js")["default"];
-  window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-
-  __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
+  window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"); // require('bootstrap');
 } catch (e) {}
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -48487,7 +48474,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\nModuleBuildError: Module build failed (from ./node_modules/postcss-loader/src/index.js):\n/Users/gbeilaaliuwahab/Code/contacts/tailwind.config.js:7\n        }\n        ^\n\nSyntaxError: Unexpected token '}'\n    at new Script (vm.js:88:7)\n    at NativeCompileCache._moduleCompile (/Users/gbeilaaliuwahab/Code/contacts/node_modules/v8-compile-cache/v8-compile-cache.js:240:18)\n    at Module._compile (/Users/gbeilaaliuwahab/Code/contacts/node_modules/v8-compile-cache/v8-compile-cache.js:186:36)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1171:10)\n    at Module.load (internal/modules/cjs/loader.js:1000:32)\n    at Function.Module._load (internal/modules/cjs/loader.js:899:14)\n    at Module.require (internal/modules/cjs/loader.js:1040:19)\n    at require (/Users/gbeilaaliuwahab/Code/contacts/node_modules/v8-compile-cache/v8-compile-cache.js:161:20)\n    at /Users/gbeilaaliuwahab/Code/contacts/node_modules/tailwindcss/lib/index.js:74:107\n    at /Users/gbeilaaliuwahab/Code/contacts/node_modules/tailwindcss/lib/processTailwindFeatures.js:34:20\n    at LazyResult.run (/Users/gbeilaaliuwahab/Code/contacts/node_modules/postcss/lib/lazy-result.js:295:14)\n    at LazyResult.asyncTick (/Users/gbeilaaliuwahab/Code/contacts/node_modules/postcss/lib/lazy-result.js:208:26)\n    at LazyResult.asyncTick (/Users/gbeilaaliuwahab/Code/contacts/node_modules/postcss/lib/lazy-result.js:221:14)\n    at /Users/gbeilaaliuwahab/Code/contacts/node_modules/postcss/lib/lazy-result.js:250:14\n    at new Promise (<anonymous>)\n    at LazyResult.async (/Users/gbeilaaliuwahab/Code/contacts/node_modules/postcss/lib/lazy-result.js:246:23)\n    at LazyResult.then (/Users/gbeilaaliuwahab/Code/contacts/node_modules/postcss/lib/lazy-result.js:127:17)\n    at /Users/gbeilaaliuwahab/Code/contacts/node_modules/postcss-loader/src/index.js:142:8\n    at /Users/gbeilaaliuwahab/Code/contacts/node_modules/webpack/lib/NormalModule.js:316:20\n    at /Users/gbeilaaliuwahab/Code/contacts/node_modules/loader-runner/lib/LoaderRunner.js:367:11\n    at /Users/gbeilaaliuwahab/Code/contacts/node_modules/loader-runner/lib/LoaderRunner.js:233:18\n    at context.callback (/Users/gbeilaaliuwahab/Code/contacts/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at /Users/gbeilaaliuwahab/Code/contacts/node_modules/postcss-loader/src/index.js:208:9");
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
