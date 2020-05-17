@@ -3,12 +3,13 @@
         <div v-if="loading">Loading...</div>
         <div v-else>
             <div class="flex justify-between">
-                <div class="text-blue-400">
+                <a href="#" class="text-blue-400" @click="$router.back()">
                     < Back
-                </div>
+                </a>
                 <div class="relative">
                     <router-link :to="'/contacts/' + contact.contact_id + '/edit'"
-                                 class="px-4 py-2 rounded text-sm text-green-500 border border-green-500 text-sm font-bold mr-2">
+                                 class="px-4 py-2 rounded text-sm text-green-500 border border-green-500 text-sm font-bold mr-2"
+                    @click="">
                         Edit
                     </router-link>
 

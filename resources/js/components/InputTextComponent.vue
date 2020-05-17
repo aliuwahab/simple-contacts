@@ -18,6 +18,7 @@
             'label',
             'placeholder',
             'errors',
+            'data',
         ],
         data() {
             return {
@@ -52,6 +53,11 @@
         computed: {
             hasError() {
                 return this.errors && this.errors[this.inputName] && this.errors[this.inputName].length > 0;
+            }
+        },
+        watch: {
+            data(newValue, oldValue) {
+                this.value = newValue;
             }
         },
     }
