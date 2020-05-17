@@ -36,7 +36,7 @@ class Contact extends Model
 
     public function path()
     {
-        return url(route('api.contact.show', $this));
+        return '/contacts/'.$this->id;
     }
 
 }
