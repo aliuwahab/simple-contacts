@@ -4,9 +4,12 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Contact extends Model
 {
+    use Searchable;
+
     protected $guarded = [];
 
     protected $dates = ['birth_date'];
@@ -37,6 +40,11 @@ class Contact extends Model
     public function path()
     {
         return '/contacts/'.$this->id;
+    }
+
+    public function scopeBirthdays($query)
+    {
+        return $query->whereRaw('birth_date like "%-'.now()->format('m').'-%"');
     }
 
 }
